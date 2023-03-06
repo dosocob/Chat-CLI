@@ -7,9 +7,9 @@
 
 
 **Installation**
-`git clone https://github.com/dosocob/Chat-CLI`
-`cd Chat-CLI`
-`pip install -r requirements.txt`
-**open ai.txt and replace with your api key**
-## finally run the program
+1. `git clone https://github.com/dosocob/Chat-CLI`
+2. `cd Chat-CLI`
+3. `pip install -r requirements.txt`
+4. **open ai.txt and replace with your api key**
+5. ### finally run the program
 `python Chat-CLI.py`
