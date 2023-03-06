@@ -19,5 +19,5 @@
 2. `cd Chat-CLI`
 3. `pip install -r requirements.txt`
 4. **open ai.txt and replace with your api key**
-### finally run the program
+ **finally run the program**
 `python Chat-CLI.py`
