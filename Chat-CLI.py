@@ -3,6 +3,18 @@ import os
 import time
 import msvcrt
 import pyperclip
+def get_version():
+    with open("./version.txt", "r") as f:
+        version = f.read().strip()
+    return version
+def bootmenu():
+    print("   _     _     _     _     _     _     _     _  ")
+    print("  / \   / \   / \   / \   / \   / \   / \   / \ ")
+    print(" ( C ) ( h ) ( a ) ( t ) ( - ) ( c ) ( l ) ( i )")
+    print("  \_/   \_/   \_/   \_/   \_/   \_/   \_/   \_/ ")
+    type_out_string("---------------",0.1)
+    print ("version:" + str(get_version())) 
+    time.sleep(2)
 def msg(msg, timeToExit, colorString):
         clear = lambda: os.system('cls')
         clear()
@@ -20,11 +32,15 @@ def get_api_key():
     with open("./ai.txt", "r") as f:
         api_key = f.read().strip()
     return api_key
+
 def init():
     clear = lambda: os.system('cls')
     clear()
     if get_api_key() == "REPLACE WITH YOUR OPENAI API KEY":
-         msg("_ERROR_\nAPI KEY NOT SET\n    Please open ai.txt and paste your openai api key in there\n    If you do not have ai.txt simply create the text document and paste in your api key",8,"4")
+        msg("_ERROR_\nAPI KEY NOT SET\n    Please open ai.txt and paste your openai api key in there\n    If you do not have ai.txt simply create the text document and paste in your api key",8,"4")
+    else:
+         bootmenu()
+         
 def set_clipboard(text):
     pyperclip.copy(text)
 

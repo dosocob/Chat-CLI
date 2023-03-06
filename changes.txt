@@ -1,0 +1,3 @@
+version 0.0.1 -
+    Added boot menu with animation
+    Fixed minor bugs
