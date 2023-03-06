@@ -1,8 +1,8 @@
 # SIMPLE CHAT CLI PROGRAM
 **Tested on windows, linux kinda works but stable version coming soon**
 **Requirements**
-1. openai api key, get one [here](https://platform.openai.com/)
-2. python, can be installed [here](https://www.python.org/downloads/)  
+1. **openaiapi key**, get one [here](https://platform.openai.com/)
+2. **python**, can be installed [here](https://www.python.org/downloads/)  
 
 
 
