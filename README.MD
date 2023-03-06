@@ -1,4 +1,8 @@
 # SIMPLE CHAT CLI PROGRAM
+**Features**
+1. Talk to Chat-GPT in Windows CLI.
+2. Customize the pre-question prompt to get a unique bot at your side.
+3. Copy Response to Clipboard with c key
 **Tested on windows, linux kinda works but stable version coming soon**
 **Requirements**
 1. **openai api key**, get one [here](https://platform.openai.com/)
