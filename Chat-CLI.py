@@ -4,16 +4,19 @@ import time
 import msvcrt
 import pyperclip
 def get_version():
-    with open("./version.txt", "r") as f:
-        version = f.read().strip()
-    return version
+    try:
+        with open("./version.txt", "r") as f:
+            version = f.read().strip()
+        return version
+    except:
+         return "version.txt missing"
 def bootmenu():
     print("   _     _     _     _     _     _     _     _  ")
     print("  / \   / \   / \   / \   / \   / \   / \   / \ ")
     print(" ( C ) ( h ) ( a ) ( t ) ( - ) ( c ) ( l ) ( i )")
     print("  \_/   \_/   \_/   \_/   \_/   \_/   \_/   \_/ ")
     type_out_string("---------------",0.1)
-    print ("version:" + str(get_version())) 
+    print ("version: " + str(get_version())) 
     time.sleep(2)
 def msg(msg, timeToExit, colorString):
         clear = lambda: os.system('cls')

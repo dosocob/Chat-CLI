@@ -1,3 +1,4 @@
 version 0.0.1 -
     Added boot menu with animation
     Fixed minor bugs
+    Updated the get_version func so it will catch errors
