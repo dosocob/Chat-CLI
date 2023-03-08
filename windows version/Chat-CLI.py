@@ -1,7 +1,7 @@
+import msvcrt
 import openai
 import os
 import time
-import msvcrt
 import pyperclip
 def get_version():
     try:
@@ -15,7 +15,7 @@ def bootmenu():
     print("  / \   / \   / \   / \   / \   / \   / \   / \ ")
     print(" ( C ) ( h ) ( a ) ( t ) ( - ) ( c ) ( l ) ( i )")
     print("  \_/   \_/   \_/   \_/   \_/   \_/   \_/   \_/ ")
-    type_out_string("---------------",0.1)
+    type_out_string("--windows--version--",0.1)
     print ("version: " + str(get_version())) 
     time.sleep(2)
 def msg(msg, timeToExit, colorString):
@@ -36,13 +36,62 @@ def get_api_key():
         api_key = f.read().strip()
     return api_key
 
+    
+def exitMsg(msg, timeToExit):
+        clear = lambda: os.system('cls')
+        clear()
+        colorG = lambda: os.system('color a')
+        colorG()
+        print(msg)
+        time.sleep(timeToExit)
+        colorW = lambda: os.system('color F')
+        colorW()
+        clear = lambda: os.system('cls')
+        clear()
+        exit(0)
+
+def sleep_interruptable(tim, copyAble):
+    global tocopy
+    start_time = time.monotonic()
+    if copyAble == True:
+        print("Press Enter or c to set clipboard")
+    else:
+        print("Press Enter")
+    while time.monotonic() - start_time < tim:
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+            if key == b'\r':  # Enter key
+                return
+            elif key == b'c' and copyAble == True:  # c key
+                pyperclip.copy(tocopy)
+                draw_output_ni("Copied to clipboard",1)
+                time.sleep(1)
+                return
+                
+
+def chatgpt(chat):
+    global messages
+    global prompt
+
+    messages.append({"role": "user", "content": prompt + chat})
+
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+
+    system_message = response["choices"][0]["message"]
+    messages.append(system_message)
+
+    chat_transcript = system_message['content']
+
+
+    return chat_transcript
+
 def init():
     clear = lambda: os.system('cls')
     clear()
     if get_api_key() == "REPLACE WITH YOUR OPENAI API KEY":
         msg("_ERROR_\nAPI KEY NOT SET\n    Please open ai.txt and paste your openai api key in there\n    If you do not have ai.txt simply create the text document and paste in your api key",8,"4")
     else:
-         bootmenu()
+        bootmenu()
          
 def set_clipboard(text):
     pyperclip.copy(text)
@@ -83,6 +132,7 @@ def type_out_string(text, typing_speed):
     print()
 
 init()
+
 openai.api_key = get_api_key()
 
 prompt = "You are chatGPT AI. Respond to all input in 25 words or less." 
@@ -109,7 +159,7 @@ def main():
     elif userin == "?p":
          draw_output("Current Prompt: \n\n" + prompt)
     elif userin == "exit":
-               exit1("exiting...")
+               exitMsg("exiting...")
     elif userin != "":
         output = chatgpt(userin)
         clear = lambda: os.system('cls')
@@ -129,63 +179,10 @@ def main():
         clear = lambda: os.system('cls')
         clear()
 
-def exit1(msg):
-        clear = lambda: os.system('cls')
-        clear()
-        colorG = lambda: os.system('color a')
-        colorG()
-        print(msg)
-        time.sleep(1.4)
-        colorW = lambda: os.system('color F')
-        colorW()
-        clear = lambda: os.system('cls')
-        clear()
-        exit(0)
-
-
-
-
-def sleep_interruptable(tim, copyAble):
-    global tocopy
-    start_time = time.monotonic()
-    if copyAble == True:
-        print("Press Enter or c to set clipboard")
-    else:
-        print("Press Enter")
-    while time.monotonic() - start_time < tim:
-        if msvcrt.kbhit():
-            key = msvcrt.getch()
-            if key == b'\r':  # Enter key
-                return
-            elif key == b'c' and copyAble == True:  # c key
-                pyperclip.copy(tocopy)
-                draw_output_ni("Copied to clipboard",1)
-                time.sleep(1)
-                return
-                
-
-def chatgpt(chat):
-    global messages
-    global prompt
-
-    messages.append({"role": "user", "content": prompt + chat})
-
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-
-    system_message = response["choices"][0]["message"]
-    messages.append(system_message)
-
-    chat_transcript = system_message['content']
-
-
-    return chat_transcript
-
-         
-
 while(True):
     try:
         main()
     except KeyboardInterrupt:
-        exit1("exiting...")
+        exitMsg("exiting...")
 
 

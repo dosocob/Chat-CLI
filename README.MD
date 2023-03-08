@@ -14,7 +14,7 @@
 
 
 
-**Installation**
+**Installation** needs to be updated...
 1. `git clone https://github.com/dosocob/Chat-CLI`
 2. `cd Chat-CLI`
 3. `pip install -r requirements.txt`
