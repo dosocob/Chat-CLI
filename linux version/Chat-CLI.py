@@ -1,8 +1,7 @@
-import getch
 import openai
 import os
 import time
-import pyperclip
+
 def clearCon():
         clear = lambda: os.system('clear')
         clear()
@@ -12,7 +11,7 @@ def clearandchangecolor(linuxColorCodeCommandSTR):
         color()
 def get_version():
     try:
-        with open("./version.txt", "r") as f:
+        with open("./linux version/version.txt", "r") as f:
             version = f.read().strip()
         return version
     except:
@@ -27,10 +26,11 @@ def bootmenu():
     time.sleep(2)
 def msg(msg, timeToExit, linuxcolorString):
         clearandchangecolor('echo -e "\033[' + linuxcolorString + '"')
+        print("\n\n")
         print(msg)
+        print("\n\n")
         time.sleep(timeToExit)
         clearandchangecolor('echo -e "\033[37m"')
-        exit(0)
 
 
 def get_api_key():
@@ -46,23 +46,44 @@ def exitMsg(msg, timeToExit):
         clearandchangecolor('echo -e "\033[37m"')
         exit(0)
 
-def sleep_interruptable(tim, copyAble):
-    global tocopy
-    start_time = time.monotonic()
-    if copyAble == True:
-        print("Press Enter or c to set clipboard")
-    else:
-        print("Press Enter")
-    while time.monotonic() - start_time < tim:
-        if getch.kbhit():
-            key = getch.getch()
-            if key == b'\r':  # Enter key
-                return
-            elif key == b'c' and copyAble == True:  # c key
-                pyperclip.copy(tocopy)
-                draw_output_ni("Copied to clipboard",1)
-                time.sleep(1)
-                return
+
+def copy_to_clipboard(text):
+    # Write the text to a temporary file
+    with open("/tmp/copy.txt", "w") as f:
+        f.write(text)
+
+    # Copy the contents of the file to the clipboard using xclip
+    os.system("xclip -selection clipboard /tmp/copy.txt")
+
+
+# Function to sleep for a given amount of time or until a key is pressed
+def CopyOrContinue(seconds, copy):
+    print("enter c to copy or any to continue")
+    start_time = time.time()
+    while True:
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        if elapsed_time >= seconds:
+            break
+        elif input() == "c":
+            # code to execute if 'c' is pressed
+            copy_to_clipboard(copy)
+            clearandchangecolor('echo -e "\033[32m"')
+            print("\n\n")
+            print("copied to clipbard")
+            print("\n\n")
+            time.sleep(1.4)   
+            clearandchangecolor('echo -e "\033[37m"')    
+            break
+        else:
+            break
+def break_after(seconds):
+    start_time = time.time()
+    while True:
+        current_time = time.time()
+        elapsed_time = current_time - start_time
+        if elapsed_time >= seconds:
+            break
                 
 
 def chatgpt(chat):
@@ -87,25 +108,17 @@ def init():
         msg("_ERROR_\nAPI KEY NOT SET\n    Please open ai.txt and paste your openai api key in there\n    If you do not have ai.txt simply create the text document and paste in your api key",8,"31m")
     else:
         bootmenu()
-         
-def set_clipboard(text):
-    pyperclip.copy(text)
 
-def draw_output(string):
+
+def draw_output(string, copyin):
     clearandchangecolor('echo -e "\033[32m"')
     print("\n\n")
     print(string)
     print("\n\n")
-    sleep_interruptable(15, copyAble=False)
+    CopyOrContinue(15, copy=copyin)
     clearandchangecolor('echo -e "\033[37m"')
 
-def draw_output_ni(string, timeToSleep):
-    clearandchangecolor('echo -e "\033[32m"')
-    print("\n\n")
-    print(string)
-    print("\n\n")
-    time.sleep(timeToSleep)
-    clearandchangecolor('echo -e "\033[37m"')
+
 
 def type_out_string(text, typing_speed):
 
@@ -120,13 +133,17 @@ openai.api_key = get_api_key()
 
 prompt = "You are chatGPT AI. Respond to all input in 25 words or less." 
 
+
 messages = [{"role": "system", "content": prompt}]
 
 tocopy = ""
 
+promptin = prompt
+
 def main():
     global tocopy
     global prompt
+    global promptin
     userin = input("/\n|\n|\n|\n|\n----$ ")
     if userin == "help":
         clearCon()
@@ -134,11 +151,11 @@ def main():
     elif userin == "!p":
         clearCon()
         promptin = input("prompt: ")
-        promptin = promptin + ", Respond to all input in 25 words or less."
-        draw_output("Prompt Updated: " + promptin)
-        prompt = promptin
+        promptupdated = promptin + ", Respond to all input in 25 words or less."
+        msg("Prompt Updated: " + promptupdated, 2, "32m")
+        prompt = promptupdated
     elif userin == "?p":
-         draw_output("Current Prompt: \n\n" + prompt)
+         draw_output("Current Prompt: \n\n" + prompt, promptin)
     elif userin == "exit":
                exitMsg("exiting...")
     elif userin != "":
@@ -148,7 +165,7 @@ def main():
         type_out_string(output,0.03)
         tocopy = output
         print("\n\n")
-        sleep_interruptable(15, copyAble=True)
+        CopyOrContinue(15, tocopy)
         clearandchangecolor('echo -e "\033[37m"')
     else:
         clearCon()
@@ -159,6 +176,6 @@ while(True):
 
 
     except KeyboardInterrupt:
-        exitMsg("exiting...")
+        exitMsg("exiting...", 1)
 
 

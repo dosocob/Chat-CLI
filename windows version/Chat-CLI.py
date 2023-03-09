@@ -5,7 +5,7 @@ import time
 import pyperclip
 def get_version():
     try:
-        with open("./version.txt", "r") as f:
+        with open("./windows version/version.txt", "r") as f:
             version = f.read().strip()
         return version
     except:

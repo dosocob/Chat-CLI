@@ -1,3 +1,5 @@
 version 0.0.1 -
     created linux version
-    
+    added feature to copy prompt
+    added feature to copy response
+    fixed minor bugs
