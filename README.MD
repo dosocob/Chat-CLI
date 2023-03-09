@@ -6,7 +6,7 @@
 
 
 
-**works on windows, linux version coming soon.**
+
 
 **Requirements**
 1. **openai api key**, get one [here](https://platform.openai.com/account/api-keys)
@@ -14,9 +14,15 @@
 
 
 
-**Installation** needs to be updated...
+**Installation Linux**
 1. `git clone https://github.com/dosocob/Chat-CLI`
-2. `cd Chat-CLI`
+2. `cd Chat-CLI/'linux version'/`
+3. `pip install -r requirements.txt`
+4. **open ai.txt and replace with your api key**
+
+**Installation Windows**
+1. `git clone https://github.com/dosocob/Chat-CLI`
+2. `cd Chat-CLI/'windows version'/`
 3. `pip install -r requirements.txt`
 4. **open ai.txt and replace with your api key**
 
